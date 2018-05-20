@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Apicase | Spawner API</title>
+    <meta name="description" content="">
+    
+    
+    <link rel="preload" href="/assets/css/14.styles.069008a2.css" as="style"><link rel="preload" href="/assets/js/app.8395491c.js" as="script"><link rel="preload" href="/assets/js/6.116cf7b6.js" as="script"><link rel="prefetch" href="/assets/js/0.2ef4af48.js"><link rel="prefetch" href="/assets/js/1.fcd4327d.js"><link rel="prefetch" href="/assets/js/2.5faf6c39.js"><link rel="prefetch" href="/assets/js/3.278799db.js"><link rel="prefetch" href="/assets/js/4.63f4dde3.js"><link rel="prefetch" href="/assets/js/5.42f78ee0.js"><link rel="prefetch" href="/assets/js/7.ca515bf6.js"><link rel="prefetch" href="/assets/js/8.80949565.js"><link rel="prefetch" href="/assets/js/9.66a23df4.js"><link rel="prefetch" href="/assets/js/10.a00d6c64.js"><link rel="prefetch" href="/assets/js/11.a5f43c96.js"><link rel="prefetch" href="/assets/js/12.9018ccc1.js"><link rel="prefetch" href="/assets/js/13.40d0899f.js">
+    <link rel="stylesheet" href="/assets/css/14.styles.069008a2.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/" class="home-link router-link-active"><!----><span class="site-name">
+      Apicase
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><!----></div></header><div class="sidebar-mask"></div><div class="sidebar"><!----><ul class="sidebar-links"><li><div class="sidebar-group first"><p class="sidebar-heading"><span>Apicase</span><!----></p><ul class="sidebar-group-items"><li><a href="/" class="sidebar-link">Introduction</a></li><li><a href="/installation.html" class="sidebar-link">Installation</a></li><li><a href="/quick-start.html" class="sidebar-link">Quick start</a></li></ul></div></li><li><div class="sidebar-group"><p class="sidebar-heading open"><span>Anatomy</span><!----></p><ul class="sidebar-group-items"><li><a href="/anatomy/requests.html" class="sidebar-link">Requests</a></li><li><a href="/anatomy/services.html" class="sidebar-link">Services</a></li><li><a href="/anatomy/spawner.html" class="active sidebar-link">Spawner API</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/anatomy/spawner.html#what-is-spawner" class="sidebar-link">What is Spawner?</a></li><li class="sidebar-sub-header"><a href="/anatomy/spawner.html#how-spawner-works" class="sidebar-link">How spawner works</a></li><li class="sidebar-sub-header"><a href="/anatomy/spawner.html#create-a-spawner" class="sidebar-link">Create a spawner</a></li><li class="sidebar-sub-header"><a href="/anatomy/spawner.html#spawner-modes" class="sidebar-link">Spawner modes</a></li><li class="sidebar-sub-header"><a href="/anatomy/spawner.html#more" class="sidebar-link">More</a></li></ul></li><li><a href="/anatomy/adapters.html" class="sidebar-link">Adapters</a></li></ul></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>Migration info</span><span class="arrow right"></span></p><!----></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>Deprecated APIs</span><span class="arrow right"></span></p><!----></div></li></ul></div><div class="page"><div class="content"><h1 id="spawner-api"><a href="#spawner-api" aria-hidden="true" class="header-anchor">#</a> Spawner API</h1><h2 id="what-is-spawner"><a href="#what-is-spawner" aria-hidden="true" class="header-anchor">#</a> What is Spawner?</h2><p>Spawner is a smart tool that defines your requests flow.</p><p>It allows you to easily make <strong>debounced</strong> requests or call requests <strong>in queue</strong></p><h2 id="how-spawner-works"><a href="#how-spawner-works" aria-hidden="true" class="header-anchor">#</a> How spawner works</h2><p>Just look at this diagram</p><p><img src="/assets/img/spawner.9b86f478.png" alt="Request diagram"></p><h2 id="create-a-spawner"><a href="#create-a-spawner" aria-hidden="true" class="header-anchor">#</a> Create a spawner</h2><pre class="language-javascript"><code><span class="token keyword">import</span> fetch <span class="token keyword">from</span> <span class="token string">&quot;@apicase/adapter-fetch&quot;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ApiSpawner <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@apicase/spawner&quot;</span>
+
+<span class="token comment">/* Create a spawner */</span>
+<span class="token keyword">const</span> spawner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiSpawner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mode<span class="token punctuation">:</span> <span class="token string">&quot;queue&quot;</span><span class="token punctuation">,</span>
+  base<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    adapter<span class="token punctuation">:</span> fetch
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* Spawn requests */</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/foo&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/bar&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/baz&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><h2 id="spawner-modes"><a href="#spawner-modes" aria-hidden="true" class="header-anchor">#</a> Spawner modes</h2><h3 id="default-just-create-requests-on-each-spawn"><a href="#default-just-create-requests-on-each-spawn" aria-hidden="true" class="header-anchor">#</a> default - just create requests on each .spawn()</h3><pre class="language-javascript"><code><span class="token keyword">const</span> spawner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiSpawner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mode<span class="token punctuation">:</span> <span class="token string">&quot;default&quot;</span><span class="token punctuation">,</span>
+  base<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* ... */</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* Will call all requests */</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/foo&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/bar&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/baz&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><h3 id="queue-call-next-request-after-previous-ends"><a href="#queue-call-next-request-after-previous-ends" aria-hidden="true" class="header-anchor">#</a> queue - call next request after previous ends</h3><pre class="language-javascript"><code><span class="token keyword">const</span> spawner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiSpawner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mode<span class="token punctuation">:</span> <span class="token string">&quot;queue&quot;</span><span class="token punctuation">,</span>
+  time<span class="token punctuation">:</span> <span class="token number">500</span><span class="token punctuation">,</span>
+  base<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* ... */</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* Will call `/bar` after `/foo` finish + 500ms delay */</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/foo&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/bar&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><h3 id="delay-call-request-with-delay"><a href="#delay-call-request-with-delay" aria-hidden="true" class="header-anchor">#</a> delay - call request with delay</h3><pre class="language-javascript"><code><span class="token keyword">const</span> spawner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiSpawner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mode<span class="token punctuation">:</span> <span class="token string">&quot;delay&quot;</span><span class="token punctuation">,</span>
+  time<span class="token punctuation">:</span> <span class="token number">500</span><span class="token punctuation">,</span>
+  base<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* ... */</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* Will call all requests after 500ms */</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/foo&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/bar&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/baz&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* req.cancel() before timeout will drop timer */</span>
+<span class="token keyword">const</span> req <span class="token operator">=</span> spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/skip&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+req<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre><h3 id="interval-call-requests-with-repeats"><a href="#interval-call-requests-with-repeats" aria-hidden="true" class="header-anchor">#</a> interval - call requests with repeats</h3><pre class="language-javascript"><code><span class="token keyword">const</span> spawner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiSpawner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mode<span class="token punctuation">:</span> <span class="token string">&quot;interval&quot;</span><span class="token punctuation">,</span>
+  time<span class="token punctuation">:</span> <span class="token number">500</span><span class="token punctuation">,</span>
+  base<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* ... */</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* Will start request again after finish + 500ms delay */</span>
+<span class="token keyword">const</span> req <span class="token operator">=</span> spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/foo&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* req.cancel() will stop interval */</span>
+req<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre><h3 id="debounce-cancel-request-and-start-again-to-prevent-spam"><a href="#debounce-cancel-request-and-start-again-to-prevent-spam" aria-hidden="true" class="header-anchor">#</a> debounce - cancel request and start again to prevent spam</h3><pre class="language-javascript"><code><span class="token keyword">const</span> spawner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiSpawner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mode<span class="token punctuation">:</span> <span class="token string">&quot;debounce&quot;</span><span class="token punctuation">,</span>
+  time<span class="token punctuation">:</span> <span class="token number">200</span><span class="token punctuation">,</span>
+  base<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* ... */</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* 
+  If another request isn't running - start request after 200ms
+  Otherwise, cancel the current one and start timer again
+*/</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/search&quot;</span><span class="token punctuation">,</span> query<span class="token punctuation">:</span> <span class="token punctuation">{</span> q<span class="token punctuation">:</span> <span class="token string">&quot;f&quot;</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/search&quot;</span><span class="token punctuation">,</span> query<span class="token punctuation">:</span> <span class="token punctuation">{</span> q<span class="token punctuation">:</span> <span class="token string">&quot;fo&quot;</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/search&quot;</span><span class="token punctuation">,</span> query<span class="token punctuation">:</span> <span class="token punctuation">{</span> q<span class="token punctuation">:</span> <span class="token string">&quot;foo&quot;</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/search&quot;</span><span class="token punctuation">,</span> query<span class="token punctuation">:</span> <span class="token punctuation">{</span> q<span class="token punctuation">:</span> <span class="token string">&quot;foo &quot;</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/search&quot;</span><span class="token punctuation">,</span> query<span class="token punctuation">:</span> <span class="token punctuation">{</span> q<span class="token punctuation">:</span> <span class="token string">&quot;foo b&quot;</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/search&quot;</span><span class="token punctuation">,</span> query<span class="token punctuation">:</span> <span class="token punctuation">{</span> q<span class="token punctuation">:</span> <span class="token string">&quot;foo ba&quot;</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/search&quot;</span><span class="token punctuation">,</span> query<span class="token punctuation">:</span> <span class="token punctuation">{</span> q<span class="token punctuation">:</span> <span class="token string">&quot;foo bar&quot;</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><h3 id="throttle-skip-requests-if-you-spawn-too-fast"><a href="#throttle-skip-requests-if-you-spawn-too-fast" aria-hidden="true" class="header-anchor">#</a> throttle - skip requests if you spawn too fast</h3><pre class="language-javascript"><code><span class="token keyword">const</span> spawner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiSpawner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mode<span class="token punctuation">:</span> <span class="token string">&quot;throttle&quot;</span><span class="token punctuation">,</span>
+  time<span class="token punctuation">:</span> <span class="token number">200</span><span class="token punctuation">,</span>
+  base<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* ... */</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* 
+  Just like spawner has cooldown 
+  Won't spawn next till time's up 
+*/</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/ping&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/ping&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/ping&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/ping&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;/ping&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><h2 id="more"><a href="#more" aria-hidden="true" class="header-anchor">#</a> More</h2><h3 id="use-apiservice-as-a-base"><a href="#use-apiservice-as-a-base" aria-hidden="true" class="header-anchor">#</a> Use ApiService as a base</h3><p>You can use ApiService as spawner <code>base</code> as well</p><pre class="language-javascript"><code><span class="token keyword">const</span> base <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiService</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  adapter<span class="token punctuation">:</span> fetch<span class="token punctuation">,</span>
+  url<span class="token punctuation">:</span> <span class="token string">&quot;/api&quot;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> spawner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiSpawner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mode<span class="token punctuation">:</span> <span class="token string">&quot;queue&quot;</span><span class="token punctuation">,</span>
+  base
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">&quot;foo/bar&quot;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><h3 id="define-custom-spawner-mode"><a href="#define-custom-spawner-mode" aria-hidden="true" class="header-anchor">#</a> Define custom spawner mode</h3><pre class="language-javascript"><code><span class="token keyword">const</span> customMode <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">{</span>
+  state<span class="token punctuation">,</span> <span class="token comment">// Contains `isBlocked` flag and `queue`</span>
+  options<span class="token punctuation">,</span> <span class="token comment">// Contains `base`, `delay` and `mode`</span>
+  spawner<span class="token punctuation">,</span> <span class="token comment">// ApiSpawner instance. You can do spawner.spawn()</span>
+  reqOptions<span class="token punctuation">,</span> <span class="token comment">// Request options from spawner.spawn(options) merged with base options</span>
+  placeholder<span class="token punctuation">,</span> <span class="token comment">// IncomingCall instance. Use placeholder.on(evt, cb) for your need</span>
+  createRequest <span class="token comment">// Callback that starts request</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token comment">/* ... */</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> spawner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiSpawner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mode<span class="token punctuation">:</span> customMode
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><!----><div class="content page-nav"><p class="inner"><span class="prev">
+        ← <a href="/anatomy/services.html" class="prev">
+          Services
+        </a></span><span class="next"><a href="/anatomy/adapters.html">
+          Adapters
+        </a> →
+      </span></p></div></div></div></div>
+    <script src="/assets/js/6.116cf7b6.js" defer></script><script src="/assets/js/app.8395491c.js" defer></script>
+  </body>
+</html>

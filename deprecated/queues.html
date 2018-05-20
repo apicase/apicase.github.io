@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Apicase | Requests queues</title>
+    <meta name="description" content="">
+    
+    
+    <link rel="preload" href="/assets/css/14.styles.069008a2.css" as="style"><link rel="preload" href="/assets/js/app.8395491c.js" as="script"><link rel="preload" href="/assets/js/5.42f78ee0.js" as="script"><link rel="prefetch" href="/assets/js/6.116cf7b6.js"><link rel="prefetch" href="/assets/js/0.2ef4af48.js"><link rel="prefetch" href="/assets/js/1.fcd4327d.js"><link rel="prefetch" href="/assets/js/2.5faf6c39.js"><link rel="prefetch" href="/assets/js/3.278799db.js"><link rel="prefetch" href="/assets/js/4.63f4dde3.js"><link rel="prefetch" href="/assets/js/7.ca515bf6.js"><link rel="prefetch" href="/assets/js/8.80949565.js"><link rel="prefetch" href="/assets/js/9.66a23df4.js"><link rel="prefetch" href="/assets/js/10.a00d6c64.js"><link rel="prefetch" href="/assets/js/11.a5f43c96.js"><link rel="prefetch" href="/assets/js/12.9018ccc1.js"><link rel="prefetch" href="/assets/js/13.40d0899f.js">
+    <link rel="stylesheet" href="/assets/css/14.styles.069008a2.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/" class="home-link router-link-active"><!----><span class="site-name">
+      Apicase
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><!----></div></header><div class="sidebar-mask"></div><div class="sidebar"><!----><ul class="sidebar-links"><li><div class="sidebar-group first"><p class="sidebar-heading"><span>Apicase</span><!----></p><ul class="sidebar-group-items"><li><a href="/" class="sidebar-link">Introduction</a></li><li><a href="/installation.html" class="sidebar-link">Installation</a></li><li><a href="/quick-start.html" class="sidebar-link">Quick start</a></li></ul></div></li><li><div class="sidebar-group"><p class="sidebar-heading"><span>Anatomy</span><!----></p><ul class="sidebar-group-items"><li><a href="/anatomy/requests.html" class="sidebar-link">Requests</a></li><li><a href="/anatomy/services.html" class="sidebar-link">Services</a></li><li><a href="/anatomy/spawner.html" class="sidebar-link">Spawner API</a></li><li><a href="/anatomy/adapters.html" class="sidebar-link">Adapters</a></li></ul></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>Migration info</span><span class="arrow right"></span></p><!----></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading open"><span>Deprecated APIs</span><span class="arrow down"></span></p><ul class="sidebar-group-items"><li><a href="/deprecated/queues.html" class="active sidebar-link">Requests queues</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/deprecated/queues.html#how-to-create" class="sidebar-link">How to create</a></li><li class="sidebar-sub-header"><a href="/deprecated/queues.html#dynamic-payload" class="sidebar-link">Dynamic payload</a></li><li class="sidebar-sub-header"><a href="/deprecated/queues.html#queue-events" class="sidebar-link">Queue events</a></li></ul></li><li><a href="/deprecated/requests-plus.html" class="sidebar-link">Requests+</a></li></ul></div></li></ul></div><div class="page"><div class="content"><h1 id="requests-queues"><a href="#requests-queues" aria-hidden="true" class="header-anchor">#</a> Requests queues</h1><div class="danger custom-block"><p class="custom-block-title">Deprecated</p><p><strong>Requests queues</strong> are removed from <strong>0.15</strong><br>
+Use <a href="/anatomy/spawner.html"><strong>Spawner API</strong></a> instead</p></div><p>Asynchronous let us do a lot of good things but sometimes we need to do these things consistently. So, you have tool for that</p><h2 id="how-to-create"><a href="#how-to-create" aria-hidden="true" class="header-anchor">#</a> How to create</h2><p>Apicase has <code>ApiQueue</code> to create queues of requests:</p><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> ApiQueue <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@apicase/core'</span>
+
+<span class="token keyword">const</span> queue <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiQueue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre><p>Then, you can push requests using <code>.push()</code> method:</p><pre class="language-javascript"><code><span class="token comment">// With apicase()</span>
+queue<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>doRequest<span class="token punctuation">,</span> <span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">'/api/posts'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token comment">// With services</span>
+queue<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>SomeService<span class="token punctuation">.</span>doRequest<span class="token punctuation">,</span> <span class="token punctuation">{</span> body<span class="token punctuation">:</span> <span class="token punctuation">{</span> foo<span class="token punctuation">:</span> <span class="token string">'bar'</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><p>Additional options are separated from payload and passed as the 3rd argument:</p><pre class="language-javascript"><code>queue<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>
+  SomeService<span class="token punctuation">.</span>doRequest<span class="token punctuation">,</span> 
+  <span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">'/api/posts'</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> 
+  <span class="token punctuation">{</span> meta<span class="token punctuation">:</span> <span class="token punctuation">{</span> requiresAuth<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+</code></pre><p><code>.push()</code> returns request instance, so you can listen to it</p><pre class="language-javascript"><code><span class="token keyword">const</span> req <span class="token operator">=</span> queue<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>doRequest<span class="token punctuation">,</span> <span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">'/api/posts'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+req<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">,</span> console<span class="token punctuation">.</span>log<span class="token punctuation">)</span>
+</code></pre><p>Also, you can remove requests from queue just by using <code>.remove()</code> method:</p><pre class="language-javascript"><code>queue<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span>
+</code></pre><h2 id="dynamic-payload"><a href="#dynamic-payload" aria-hidden="true" class="header-anchor">#</a> Dynamic payload</h2><p>You can define request payload based on previous request result. For those, you need to pass payload function:</p><pre class="language-javascript"><code><span class="token comment">/* Get posts list */</span>
+queue<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>
+  GetPosts<span class="token punctuation">.</span>doRequest<span class="token punctuation">,</span> 
+  <span class="token punctuation">{</span> query<span class="token punctuation">:</span> <span class="token punctuation">{</span> userId<span class="token punctuation">:</span> <span class="token number">1</span> <span class="token punctuation">}</span> <span class="token punctuation">}</span>
+<span class="token punctuation">)</span>
+
+<span class="token comment">/* Then remove the first one */</span>
+queue<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>
+  RemovePosts<span class="token punctuation">.</span>doRequest<span class="token punctuation">,</span> 
+  posts <span class="token operator">=&gt;</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> params<span class="token punctuation">:</span> <span class="token punctuation">{</span> id<span class="token punctuation">:</span> posts<span class="token punctuation">.</span>body<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>id <span class="token punctuation">}</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span>
+</code></pre><h2 id="queue-events"><a href="#queue-events" aria-hidden="true" class="header-anchor">#</a> Queue events</h2><p>Queue has 2 events</p><pre class="language-javascript"><code><span class="token comment">/* When queue is clear */</span>
+queue<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">,</span> console<span class="token punctuation">.</span>log<span class="token punctuation">)</span>
+
+<span class="token comment">/* When one of requests has failed */</span>
+queue<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'fail'</span><span class="token punctuation">,</span> console<span class="token punctuation">.</span>log<span class="token punctuation">)</span>
+</code></pre></div><!----><div class="content page-nav"><p class="inner"><span class="prev">
+        ← <a href="/migration-info/013-014.html" class="prev">
+          0.13 -&gt; 0.14
+        </a></span><span class="next"><a href="/deprecated/requests-plus.html">
+          Requests+
+        </a> →
+      </span></p></div></div></div></div>
+    <script src="/assets/js/5.42f78ee0.js" defer></script><script src="/assets/js/app.8395491c.js" defer></script>
+  </body>
+</html>

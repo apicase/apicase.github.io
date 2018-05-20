@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Apicase | Quick start</title>
+    <meta name="description" content="">
+    
+    
+    <link rel="preload" href="/assets/css/14.styles.069008a2.css" as="style"><link rel="preload" href="/assets/js/app.8395491c.js" as="script"><link rel="preload" href="/assets/js/0.2ef4af48.js" as="script"><link rel="prefetch" href="/assets/js/6.116cf7b6.js"><link rel="prefetch" href="/assets/js/1.fcd4327d.js"><link rel="prefetch" href="/assets/js/2.5faf6c39.js"><link rel="prefetch" href="/assets/js/3.278799db.js"><link rel="prefetch" href="/assets/js/4.63f4dde3.js"><link rel="prefetch" href="/assets/js/5.42f78ee0.js"><link rel="prefetch" href="/assets/js/7.ca515bf6.js"><link rel="prefetch" href="/assets/js/8.80949565.js"><link rel="prefetch" href="/assets/js/9.66a23df4.js"><link rel="prefetch" href="/assets/js/10.a00d6c64.js"><link rel="prefetch" href="/assets/js/11.a5f43c96.js"><link rel="prefetch" href="/assets/js/12.9018ccc1.js"><link rel="prefetch" href="/assets/js/13.40d0899f.js">
+    <link rel="stylesheet" href="/assets/css/14.styles.069008a2.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/" class="home-link router-link-active"><!----><span class="site-name">
+      Apicase
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><!----></div></header><div class="sidebar-mask"></div><div class="sidebar"><!----><ul class="sidebar-links"><li><div class="sidebar-group first"><p class="sidebar-heading open"><span>Apicase</span><!----></p><ul class="sidebar-group-items"><li><a href="/" class="sidebar-link">Introduction</a></li><li><a href="/installation.html" class="sidebar-link">Installation</a></li><li><a href="/quick-start.html" class="active sidebar-link">Quick start</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/quick-start.html#events-handling" class="sidebar-link">Events handling</a></li><li class="sidebar-sub-header"><a href="/quick-start.html#middlewares" class="sidebar-link">Middlewares</a></li><li class="sidebar-sub-header"><a href="/quick-start.html#services" class="sidebar-link">Services</a></li><li class="sidebar-sub-header"><a href="/quick-start.html#adapters" class="sidebar-link">Adapters</a></li></ul></li></ul></div></li><li><div class="sidebar-group"><p class="sidebar-heading"><span>Anatomy</span><!----></p><ul class="sidebar-group-items"><li><a href="/anatomy/requests.html" class="sidebar-link">Requests</a></li><li><a href="/anatomy/services.html" class="sidebar-link">Services</a></li><li><a href="/anatomy/spawner.html" class="sidebar-link">Spawner API</a></li><li><a href="/anatomy/adapters.html" class="sidebar-link">Adapters</a></li></ul></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>Migration info</span><span class="arrow right"></span></p><!----></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>Deprecated APIs</span><span class="arrow right"></span></p><!----></div></li></ul></div><div class="page"><div class="content"><h1 id="quick-start"><a href="#quick-start" aria-hidden="true" class="header-anchor">#</a> Quick start</h1><p><strong>Before start:</strong> for better understanding, I will talk about only http APIs using fetch adapter.</p><p>Just keep in mind that:</p><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> apicase <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;@apicase/core&quot;</span>
+<span class="token keyword">import</span> fetch <span class="token keyword">from</span> <span class="token string">&quot;@apicase/adapter-fetch&quot;</span>
+
+<span class="token keyword">const</span> doRequest <span class="token operator">=</span> <span class="token function">apicase</span><span class="token punctuation">(</span>fetch<span class="token punctuation">)</span>
+</code></pre><p>Here I will show you core features of Apicase based on <em>&quot;Create post&quot;</em> example.</p><h2 id="events-handling"><a href="#events-handling" aria-hidden="true" class="header-anchor">#</a> Events handling</h2><p>Events allow you handle requests locally or globally via subscriptions.</p><p>Also, Apicase follows <em>&quot;business logic failures are not exception&quot;</em> principle</p><p>So we need at least 3 states for that:</p><pre class="language-javascript"><code><span class="token comment">/* Do you recognize axios? */</span>
+<span class="token keyword">const</span> payload <span class="token operator">=</span> <span class="token punctuation">{</span>
+  url<span class="token punctuation">:</span> <span class="token string">&quot;/api/posts&quot;</span><span class="token punctuation">,</span>
+  method<span class="token punctuation">:</span> <span class="token string">&quot;POST&quot;</span><span class="token punctuation">,</span>
+  body<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token string">&quot;Hello, Apicase&quot;</span><span class="token punctuation">,</span>
+    text<span class="token punctuation">:</span> <span class="token string">&quot;This is my favourite post&quot;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> request <span class="token operator">=</span> <span class="token function">doRequest</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+
+<span class="token comment">/* Request is done */</span>
+request<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">&quot;done&quot;</span><span class="token punctuation">,</span> postSubmitted<span class="token punctuation">)</span>
+request<span class="token punctuation">.</span><span class="token function">onDone</span><span class="token punctuation">(</span>postSubmitted<span class="token punctuation">)</span>
+
+<span class="token comment">/* Request is failed but it's OK */</span>
+request<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">&quot;fail&quot;</span><span class="token punctuation">,</span> invalidData<span class="token punctuation">)</span>
+request<span class="token punctuation">.</span><span class="token function">onFail</span><span class="token punctuation">(</span>invalidData<span class="token punctuation">)</span>
+
+<span class="token comment">/* Unexpected error (may be code error or smth else) */</span>
+request<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">&quot;error&quot;</span><span class="token punctuation">,</span> logError<span class="token punctuation">)</span>
+
+<span class="token comment">/* Bonus #4: cancel event */</span>
+request<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">&quot;cancel&quot;</span><span class="token punctuation">,</span> undoSubmit<span class="token punctuation">)</span>
+</code></pre><p>You still can use it as Promise or with <code>async/await</code>:</p><pre class="language-javascript"><code><span class="token keyword">const</span> <span class="token punctuation">{</span> success<span class="token punctuation">,</span> result <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token function">doRequest</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>success<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">/* resolved */</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+  <span class="token comment">/* rejected */</span>
+<span class="token punctuation">}</span>
+</code></pre><blockquote><p>– Looks easy<br>
+– But we haven't authentification<br>
+– Just scroll down 😃</p></blockquote><h2 id="middlewares"><a href="#middlewares" aria-hidden="true" class="header-anchor">#</a> Middlewares</h2><p>Middlewares allow you to change-on-fly/resolve/reject/retry API requests</p><p>Apicase creates an async queue that consists of <em>before</em> hooks, <em>request</em>, <em>resolve</em> and <em>reject</em> hooks.</p><p>Look at this diagram:</p><p><img src="/assets/img/diagram.2abf8962.png" alt="Request diagram"></p><p>Hook is an asynchronous function that accepts <em>payload</em> and some callbacks.</p><ul><li>Use <code>next</code> to go to the next step (or next hook)</li><li>Use <code>done</code> to call done hooks and resolve request</li><li>Use <code>fail</code> to call fail hooks and reject request</li><li>Use <code>retry</code> to start call again with another payload</li></ul><p>Hooks are passed in <code>hooks</code> property</p><h3 id="why-is-it-important"><a href="#why-is-it-important" aria-hidden="true" class="header-anchor">#</a> Why is it important?</h3><p>Still suffer with authentification? Just look at this:</p><pre class="language-javascript"><code><span class="token keyword">const</span> call <span class="token operator">=</span> <span class="token function">doRequest</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  url<span class="token punctuation">:</span> <span class="token string">'/api/posts'</span><span class="token punctuation">,</span>
+  method<span class="token punctuation">:</span> <span class="token string">'POST'</span><span class="token punctuation">,</span>
+  body<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token string">'Hello, Apicase'</span><span class="token punctuation">,</span>
+    text<span class="token punctuation">:</span> <span class="token string">'This is my favourite post'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  hooks<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* Add client token */</span>
+    <span class="token function">before</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> payload<span class="token punctuation">,</span> next <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> token <span class="token operator">=</span> localStorage<span class="token punctuation">.</span><span class="token function">getItem</span><span class="token punctuation">(</span><span class="token string">'token'</span><span class="token punctuation">)</span>
+      payload<span class="token punctuation">.</span>headers <span class="token operator">=</span> <span class="token punctuation">{</span> 
+        <span class="token operator">...</span>payload<span class="token punctuation">.</span>headers<span class="token punctuation">,</span> 
+        token
+      <span class="token punctuation">}</span>
+      <span class="token function">next</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">/* If it's failed, try to refresh token */</span>
+    <span class="token function">fail</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> payload<span class="token punctuation">,</span> result<span class="token punctuation">,</span> retry<span class="token punctuation">,</span> next <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span>status <span class="token operator">!==</span> <span class="token number">401</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">next</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+      <span class="token keyword">const</span> <span class="token punctuation">{</span> success <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">await</span> refreshToken<span class="token punctuation">.</span><span class="token function">doRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>success<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">retry</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function">next</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* Just listen to it */</span>
+call<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">,</span> postPublished<span class="token punctuation">)</span>
+call<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'fail'</span><span class="token punctuation">,</span> shitHappened<span class="token punctuation">)</span>
+</code></pre><blockquote><p>– Easy-easy!<br>
+– Should I write this on each call?? And... wait, what is <code>refreshToken</code>?<br>
+– You'll find out it soon 😃</p></blockquote><h2 id="services"><a href="#services" aria-hidden="true" class="header-anchor">#</a> Services</h2><p>Apicase services provides an opportunity to split up your API logic onto services with unlimited inheritance.</p><p>You can partially put payload, hooks and all of request params to service and then call it.</p><p>You can extend services as much as you want.</p><p>Services also have global events listeners that allows you to do some cool things.</p><h3 id="example-of-services-usage"><a href="#example-of-services-usage" aria-hidden="true" class="header-anchor">#</a> Example of services usage</h3><p>Let's move our refresh-token logic into a separated file (e.g. <em>api.js</em>):</p><pre class="language-javascript"><code><span class="token keyword">import</span> fetch <span class="token keyword">from</span> <span class="token string">'@apicase/adapter-fetch'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ApiService <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@apicase/services'</span>
+
+<span class="token comment">/* Base options for all services */</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> BaseService <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiService</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  adapter<span class="token punctuation">:</span> fetch<span class="token punctuation">,</span>
+  url<span class="token punctuation">:</span> <span class="token string">'/api'</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'error'</span><span class="token punctuation">,</span> globalErrorLogger<span class="token punctuation">)</span>
+
+<span class="token comment">/* Yep, it's here */</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> ReloginService <span class="token operator">=</span> BaseService<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  url<span class="token punctuation">:</span> <span class="token string">'auth/refresh'</span><span class="token punctuation">,</span>
+  hooks<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token function">before</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> payload<span class="token punctuation">,</span> next <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> refreshToken <span class="token operator">=</span> localStorage<span class="token punctuation">.</span><span class="token function">getItem</span><span class="token punctuation">(</span><span class="token string">'refresh_token'</span><span class="token punctuation">)</span>
+      payload<span class="token punctuation">.</span>headers <span class="token operator">=</span> <span class="token punctuation">{</span> 
+        <span class="token operator">...</span>payload<span class="token punctuation">.</span>headers<span class="token punctuation">,</span> 
+        refreshToken
+      <span class="token punctuation">}</span>
+      <span class="token function">next</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+ReloginService<span class="token punctuation">.</span><span class="token function">on</span><span class="token punctuation">(</span><span class="token string">'done'</span><span class="token punctuation">,</span> res <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  localStorage<span class="token punctuation">.</span><span class="token function">setItem</span><span class="token punctuation">(</span><span class="token string">'token'</span><span class="token punctuation">,</span> res<span class="token punctuation">.</span>body<span class="token punctuation">.</span>token<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* API services with auth logic */</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> WithAuthService <span class="token operator">=</span> BaseService<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  hooks<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">/* Add client token */</span>
+    <span class="token function">before</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> payload<span class="token punctuation">,</span> next <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">const</span> token <span class="token operator">=</span> localStorage<span class="token punctuation">.</span><span class="token function">getItem</span><span class="token punctuation">(</span><span class="token string">'token'</span><span class="token punctuation">)</span>
+      payload<span class="token punctuation">.</span>headers <span class="token operator">=</span> <span class="token punctuation">{</span> 
+        <span class="token operator">...</span>payload<span class="token punctuation">.</span>headers<span class="token punctuation">,</span> 
+        token
+      <span class="token punctuation">}</span>
+      <span class="token function">next</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token comment">/* If it's failed, try to refresh token */</span>
+    <span class="token function">fail</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> payload<span class="token punctuation">,</span> result<span class="token punctuation">,</span> retry<span class="token punctuation">,</span> next <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span>status <span class="token operator">!==</span> <span class="token number">401</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token function">next</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+      <span class="token keyword">const</span> <span class="token punctuation">{</span> success <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">await</span> ReloginService<span class="token punctuation">.</span><span class="token function">doRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>success<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">retry</span><span class="token punctuation">(</span>payload<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        <span class="token function">next</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><p>And then, our API request now looks like in the first code example:</p><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> WithAuthService <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;./api&quot;</span>
+
+WithAuthService<span class="token punctuation">.</span><span class="token function">doRequest</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  url<span class="token punctuation">:</span> <span class="token string">&quot;posts&quot;</span><span class="token punctuation">,</span>
+  method<span class="token punctuation">:</span> <span class="token string">&quot;POST&quot;</span><span class="token punctuation">,</span>
+  body<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token string">&quot;Hello, Apicase&quot;</span><span class="token punctuation">,</span>
+    text<span class="token punctuation">:</span> <span class="token string">&quot;This is my favourite post&quot;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><h3 id="meta-information"><a href="#meta-information" aria-hidden="true" class="header-anchor">#</a> Meta information</h3><p>Also, you can pass <code>meta</code> property to request. It will be available in <strong>hooks</strong> only (not in adapter).</p><p>You can use it to check whether request should use auth logic or not:</p><pre class="language-javascript"><code>ApiService<span class="token punctuation">.</span><span class="token function">doRequest</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  url<span class="token punctuation">:</span> <span class="token string">&quot;posts&quot;</span><span class="token punctuation">,</span>
+  method<span class="token punctuation">:</span> <span class="token string">&quot;POST&quot;</span><span class="token punctuation">,</span>
+  meta<span class="token punctuation">:</span> <span class="token punctuation">{</span> authReqired<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  body<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    title<span class="token punctuation">:</span> <span class="token string">&quot;Hello, Apicase&quot;</span><span class="token punctuation">,</span>
+    text<span class="token punctuation">:</span> <span class="token string">&quot;This is my favourite post&quot;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token comment">/* or even better */</span>
+<span class="token keyword">const</span> WithAuthService <span class="token operator">=</span> ApiService<span class="token punctuation">.</span><span class="token function">extend</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  meta<span class="token punctuation">:</span> <span class="token punctuation">{</span> authRequired<span class="token punctuation">:</span> <span class="token boolean">true</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+WithAuthService<span class="token punctuation">.</span><span class="token function">doRequest</span><span class="token punctuation">(</span><span class="token comment">/* ... */</span><span class="token punctuation">)</span>
+</code></pre><h3 id="it-s-not-all-surprises"><a href="#it-s-not-all-surprises" aria-hidden="true" class="header-anchor">#</a> It's not all surprises</h3><p>Now, let's imagine that we have <strong>2 requests</strong> running <strong>at the same time</strong>.</p><p>And <strong>both</strong> of them are <strong>failed</strong> because of outdated token.</p><p>What's now? Both of them will call <code>refreshToken</code> service?</p><p>No. Apicase solves that problem for you.</p><p>Services contain <code>queue</code> with all requests that are currently running.</p><p>And it has some methods to deal with it:</p><ul><li><strong>doRequest</strong> - just do request. It will push it to queue and remove on finish</li><li><strong>pushRequest</strong> - do request after queue is finished</li><li><strong>doSingleRequest</strong> - do request only if there are no currently running requests. Otherwise, it will return currently running request that you can subscribe to</li><li><strong>doUniqueRequest</strong> - do request only if there are no currently running request with the same payload. Otherwise, it will return this request that you can subscribe to</li></ul><p>So, to solve the problem, you can just replace <code>doRequest</code> to <code>doSingleRequest</code>. That's all you need to be happy 😃</p><h2 id="adapters"><a href="#adapters" aria-hidden="true" class="header-anchor">#</a> Adapters</h2><h3 id="what-does-it-mean"><a href="#what-does-it-mean" aria-hidden="true" class="header-anchor">#</a> What does it mean?</h3><p>Apicase core doesn't know the ways to work with API. Instead, it just uses adapters.</p><p>It makes Apicase much more flexible, because It's not limited by http-only requests.</p><p>It also makes Apicase totally isomorphic because it's just a JS library that accepts any API and works with it.</p><h3 id="how-adapter-looks"><a href="#how-adapter-looks" aria-hidden="true" class="header-anchor">#</a> How adapter looks?</h3><p>Adapter is an object with the following structure:</p><pre class="language-javascript"><code><span class="token keyword">const</span> adapter <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token comment">/* Initial response state */</span>
+  createState<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token comment">/* ... */</span><span class="token punctuation">,</span>
+
+  <span class="token comment">/* Callback that accepts payload and resolve/reject methods */</span>
+  <span class="token function">callback</span> <span class="token punctuation">(</span><span class="token punctuation">{</span> payload<span class="token punctuation">,</span> resolve<span class="token punctuation">,</span> reject <span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">/* ... */</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+
+  <span class="token comment">/* Method that prepares payload for callback */</span>
+  convert<span class="token punctuation">:</span> payload <span class="token operator">=&gt;</span> <span class="token comment">/* ... */</span><span class="token punctuation">,</span>
+
+  <span class="token comment">/* Merge strategy for adapters payload (used in services */</span>
+  merge<span class="token punctuation">:</span> <span class="token punctuation">(</span><span class="token keyword">from</span><span class="token punctuation">,</span> to<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token comment">/* ... */</span>
+<span class="token punctuation">}</span>
+</code></pre><p>This object just should be passed to <code>apicase</code> or <code>ApiService</code>:</p><pre class="language-javascript"><code><span class="token comment">/* Just request */</span>
+<span class="token function">apicase</span><span class="token punctuation">(</span>adapter<span class="token punctuation">)</span><span class="token punctuation">(</span>opts<span class="token punctuation">)</span>
+
+<span class="token comment">/* Service */</span>
+<span class="token keyword">new</span> <span class="token class-name">ApiService</span><span class="token punctuation">(</span><span class="token punctuation">{</span> adapter<span class="token punctuation">,</span> <span class="token operator">...</span>opts <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><p>As you can see at the start we used <code>@apicase/adapter-fetch</code></p><h3 id="what-adapters-we-have-for-now"><a href="#what-adapters-we-have-for-now" aria-hidden="true" class="header-anchor">#</a> What adapters we have for now?</h3><p>For now, apicase has only <code>fetch</code> and <code>xhr</code> official adapters.</p><p>But we are planning to add <code>websocket</code> support too and maybe some another cool things.</p></div><!----><div class="content page-nav"><p class="inner"><span class="prev">
+        ← <a href="/installation.html" class="prev">
+          Installation
+        </a></span><span class="next"><a href="/anatomy/requests.html">
+          Requests
+        </a> →
+      </span></p></div></div></div></div>
+    <script src="/assets/js/0.2ef4af48.js" defer></script><script src="/assets/js/app.8395491c.js" defer></script>
+  </body>
+</html>

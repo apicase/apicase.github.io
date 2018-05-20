@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Apicase | v0.13 -&gt; v0.14 migration guide</title>
+    <meta name="description" content="">
+    
+    
+    <link rel="preload" href="/assets/css/14.styles.069008a2.css" as="style"><link rel="preload" href="/assets/js/app.8395491c.js" as="script"><link rel="preload" href="/assets/js/2.5faf6c39.js" as="script"><link rel="prefetch" href="/assets/js/6.116cf7b6.js"><link rel="prefetch" href="/assets/js/0.2ef4af48.js"><link rel="prefetch" href="/assets/js/1.fcd4327d.js"><link rel="prefetch" href="/assets/js/3.278799db.js"><link rel="prefetch" href="/assets/js/4.63f4dde3.js"><link rel="prefetch" href="/assets/js/5.42f78ee0.js"><link rel="prefetch" href="/assets/js/7.ca515bf6.js"><link rel="prefetch" href="/assets/js/8.80949565.js"><link rel="prefetch" href="/assets/js/9.66a23df4.js"><link rel="prefetch" href="/assets/js/10.a00d6c64.js"><link rel="prefetch" href="/assets/js/11.a5f43c96.js"><link rel="prefetch" href="/assets/js/12.9018ccc1.js"><link rel="prefetch" href="/assets/js/13.40d0899f.js">
+    <link rel="stylesheet" href="/assets/css/14.styles.069008a2.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div><a href="/" class="home-link router-link-active"><!----><span class="site-name">
+      Apicase
+    </span></a><div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""><!----></div><!----></div></header><div class="sidebar-mask"></div><div class="sidebar"><!----><ul class="sidebar-links"><li><div class="sidebar-group first"><p class="sidebar-heading"><span>Apicase</span><!----></p><ul class="sidebar-group-items"><li><a href="/" class="sidebar-link">Introduction</a></li><li><a href="/installation.html" class="sidebar-link">Installation</a></li><li><a href="/quick-start.html" class="sidebar-link">Quick start</a></li></ul></div></li><li><div class="sidebar-group"><p class="sidebar-heading"><span>Anatomy</span><!----></p><ul class="sidebar-group-items"><li><a href="/anatomy/requests.html" class="sidebar-link">Requests</a></li><li><a href="/anatomy/services.html" class="sidebar-link">Services</a></li><li><a href="/anatomy/spawner.html" class="sidebar-link">Spawner API</a></li><li><a href="/anatomy/adapters.html" class="sidebar-link">Adapters</a></li></ul></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading open"><span>Migration info</span><span class="arrow down"></span></p><ul class="sidebar-group-items"><li><a href="/migration-info/014-015.html" class="sidebar-link">0.14 -&gt; 0.15</a></li><li><a href="/migration-info/013-014.html" class="active sidebar-link">0.13 -&gt; 0.14</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/migration-info/013-014.html#deprecated-requests" class="sidebar-link">Deprecated Requests+</a></li><li class="sidebar-sub-header"><a href="/migration-info/013-014.html#moved-apiservice" class="sidebar-link">Moved ApiService</a></li></ul></li></ul></div></li><li><div class="sidebar-group collapsable"><p class="sidebar-heading"><span>Deprecated APIs</span><span class="arrow right"></span></p><!----></div></li></ul></div><div class="page"><div class="content"><h1 id="v0-13-v0-14-migration-guide"><a href="#v0-13-v0-14-migration-guide" aria-hidden="true" class="header-anchor">#</a> v0.13 -&gt; v0.14 migration guide</h1><h2 id="deprecated-requests"><a href="#deprecated-requests" aria-hidden="true" class="header-anchor">#</a> Deprecated Requests+</h2><p>Since <a href="/anatomy/spawner.html">Spawner API</a> is released there are no longer need in delayed requests.</p><p>It means that all <code>options</code> will be deprecated.</p><p>For example, instead of:</p><pre class="language-javascript"><code><span class="token keyword">const</span> req <span class="token operator">=</span> <span class="token function">doRequest</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  url<span class="token punctuation">:</span> <span class="token string">'/smth'</span>
+  options<span class="token punctuation">:</span> <span class="token punctuation">{</span>
+    immediate<span class="token punctuation">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    debounce<span class="token punctuation">:</span> <span class="token number">500</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><p>You should use:</p><pre class="language-javascript"><code><span class="token keyword">const</span> spawner <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ApiSpawner</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  mode<span class="token punctuation">:</span> <span class="token string">'debounce'</span><span class="token punctuation">,</span>
+  time<span class="token punctuation">:</span> <span class="token number">500</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> req <span class="token operator">=</span> spawner<span class="token punctuation">.</span><span class="token function">spawn</span><span class="token punctuation">(</span><span class="token punctuation">{</span> url<span class="token punctuation">:</span> <span class="token string">'/smth'</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre><h2 id="moved-apiservice"><a href="#moved-apiservice" aria-hidden="true" class="header-anchor">#</a> Moved ApiService</h2><p><code>ApiService</code> moved from <code>@apicase/core</code> to <code>@apicase/services</code> package</p><p>You should just fix your imports:</p><pre class="language-javascript"><code><span class="token comment">// &lt;=0.13</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ApiService <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@apicase/core'</span>
+
+<span class="token comment">// 0.14+</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ApiService <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'@apicase/services'</span>
+</code></pre></div><!----><div class="content page-nav"><p class="inner"><span class="prev">
+        ← <a href="/migration-info/014-015.html" class="prev">
+          0.14 -&gt; 0.15
+        </a></span><span class="next"><a href="/deprecated/queues.html">
+          Requests queues
+        </a> →
+      </span></p></div></div></div></div>
+    <script src="/assets/js/2.5faf6c39.js" defer></script><script src="/assets/js/app.8395491c.js" defer></script>
+  </body>
+</html>
