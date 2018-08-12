@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Docs for Apicase",
   "scripts": {
+    "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   }
 }
