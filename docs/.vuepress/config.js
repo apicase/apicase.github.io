@@ -32,7 +32,21 @@ module.exports = {
           '/deprecated/queues',
           '/deprecated/requests-plus'
         ]
+      },
+      {
+        title: 'Adapters',
+        children: [
+          '/adapters/fetch',
+          '/adapters/xmlhttprequest'
+        ]
       }
     ]
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@assets': './assets'
+      }
+    }
   }
 }

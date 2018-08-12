@@ -32,4 +32,4 @@ If you want to support the projects, PRs are welcome :\)
 
 ## Links
 
-Github: [**here**](https://github.com/apicase/core)
+<a href="https://github.com/apicase/core">![GitHub](./assets/octoface.svg)</a>

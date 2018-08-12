@@ -67,5 +67,9 @@ Service.doRequest({ url: 'posts' })
 Service.doRequest({ url: '/another_url' })
 ```
 
+## Ready for More?
 
+To see adapters in details, have a look at:
 
+* [@apicase/adapter-fetch](/adapters/fetch.html)
+* [@apicase/adapter-xhr](/adapters/xmlhttprequest.html)
