@@ -20,6 +20,13 @@ module.exports = {
         ]
       },
       {
+        title: 'Adapters',
+        children: [
+          '/adapters/fetch',
+          '/adapters/xmlhttprequest'
+        ]
+      },
+      {
         title: 'Migration info',
         children: [
           ['/migration-info/014-015', '0.14 -> 0.15'],
@@ -31,13 +38,6 @@ module.exports = {
         children: [
           '/deprecated/queues',
           '/deprecated/requests-plus'
-        ]
-      },
-      {
-        title: 'Adapters',
-        children: [
-          '/adapters/fetch',
-          '/adapters/xmlhttprequest'
         ]
       }
     ]
