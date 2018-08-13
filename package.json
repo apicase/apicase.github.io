@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "Docs for Apicase",
   "scripts": {
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs",
+    "prepublish": "npm run build",
+    "publish": "node ./cli/publish.js"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.2.0"
   }
 }
